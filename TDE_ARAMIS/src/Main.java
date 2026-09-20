@@ -35,6 +35,7 @@ public class Main {
             case 2:
                 System.out.println("Digite a sua frase ou palavra a ser decodificada");
                 String C = scanner.nextLine();
+                arvore.decodificar(C);
                 break;
         }
 
@@ -129,32 +130,67 @@ class Arvore {
             inserir("---..", '8');
             inserir("----.", '9');
             inserir("-----", '0');
-        }
     }
 
     public void decodificar(String frase_decodificar){
 
-        String frase_traduzida = " ";
+        String frase_traduzida = "";
         No no_atual = raiz;
 
+        //percorredor profissional de codigo morse capaz de identificar o melhor valor
         for(int i = 0; i < frase_decodificar.length(); i++) {
 
             char caractere = frase_decodificar.charAt(i);
 
             if (caractere == '.') {
-                //
+
+                //verificando se o codigo é valido mesmo (tortao pra esquerda)
+                if(no_atual.proximoEsquerda == null){
+                    System.out.println("O codigo morse é inválido! Tente novamente");
+                    return;
+                } else {
+                    no_atual = no_atual.proximoEsquerda;
+                }
+
             } else if (caractere == '-') {
-                //
+
+                //verificando se o codigo é valido mesmo (tortao pra direita)
+                if(no_atual.proximoDireita == null){
+                    System.out.println("O codigo morse é inválido! Tente novamente");
+                    return;
+                } else {
+                    no_atual = no_atual.proximoDireita;
+                }
+
             } else if(caractere == ' '){
-                //
+
+                //confere se o nó anterior é raiz, pq se for ele vai acabar colocando outro espaço desnecessário
+                if(no_atual == raiz){
+                    continue;
+                } else {
+                    frase_traduzida += no_atual.valor;
+                    no_atual = raiz;
+                }
+
             } else if(caractere =='/'){
+
                 frase_traduzida += " ";
+                no_atual = raiz;
+
             } else {
+
                 System.out.println("Insira um código morse válido...");
-                break;
+                return;
+
             }
 
         }
+
+        if (no_atual != raiz) {
+            frase_traduzida += no_atual.valor;
+        }
+
+        System.out.println("Frase traduziada: " + frase_traduzida);
 
     }
 
