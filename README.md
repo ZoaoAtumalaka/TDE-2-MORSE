@@ -1,2 +1,2 @@
-# TDE-2-MORSE-FLOOD
-Trabalho TDE 2 sobre código Morse e FloodFil
+# TDE-2-MORSE
+Trabalho TDE 2 sobre a criação de um codificador e um decodificador de código Morse
